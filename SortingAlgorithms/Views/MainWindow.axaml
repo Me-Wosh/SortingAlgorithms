@@ -1,0 +1,79 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SortingAlgorithms.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+        x:Class="SortingAlgorithms.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SortingAlgorithms">
+    
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Window.Styles>
+        <Style Selector="StackPanel">
+            <Setter Property="Spacing" Value="5"></Setter>
+        </Style>
+        
+        <Style Selector="StackPanel > Button">
+            <Setter Property="Width" Value="50"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
+        
+        <Style Selector="Rectangle">
+            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+            <Setter Property="Width" Value="10"></Setter>
+            <Setter Property="Fill" Value="MediumPurple"></Setter>
+        </Style>
+    </Window.Styles>
+    
+    <DockPanel Margin="15">
+        <StackPanel 
+            DockPanel.Dock="Right" 
+            MinWidth="215"
+        >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center">Algorithm</TextBlock>
+                <ComboBox SelectedIndex="{Binding SelectedItem}" Width="140" PlaceholderText="- Select -">
+                    <ComboBoxItem>Bubble Sort</ComboBoxItem>
+                    <ComboBoxItem>Selection Sort</ComboBoxItem>
+                    <ComboBoxItem>Insertion Sort</ComboBoxItem>
+                    <ComboBoxItem>Merge Sort</ComboBoxItem>
+                    <ComboBoxItem>Quick Sort</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            
+            <StackPanel>
+                <TextBlock VerticalAlignment="Center">Speed</TextBlock>
+                <Slider Minimum="200" Maximum="2000"></Slider>
+            </StackPanel>
+            
+            <TextBlock>Time Elapsed</TextBlock>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button>Start</Button>
+                <Button>Stop</Button>                
+            </StackPanel>
+            
+            <TextBlock Text="{Binding SelectedItem}"></TextBlock>
+        </StackPanel>
+        
+        <ItemsControl ItemsSource="{Binding Rectangles}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="2"></StackPanel>
+                </ItemsPanelTemplate>    
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Height="{Binding Height}"></Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+
+</Window>
