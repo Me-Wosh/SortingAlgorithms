@@ -54,7 +54,7 @@
             <TextBlock>Time Elapsed</TextBlock>
             
             <StackPanel Orientation="Horizontal">
-                <Button>Start</Button>
+                <Button Command="{Binding StartSorting}">Start</Button>
                 <Button>Stop</Button>                
             </StackPanel>
             
@@ -64,7 +64,7 @@
         <ItemsControl ItemsSource="{Binding Rectangles}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="2"></StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="1"></StackPanel>
                 </ItemsPanelTemplate>    
             </ItemsControl.ItemsPanel>
             
