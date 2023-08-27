@@ -19,13 +19,13 @@
         </Style>
         
         <Style Selector="StackPanel > Button">
-            <Setter Property="Width" Value="50"></Setter>
+            <Setter Property="Width" Value="60"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         </Style>
         
         <Style Selector="Rectangle">
             <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
-            <Setter Property="Width" Value="10"></Setter>
+            <Setter Property="Width" Value="5"></Setter>
             <Setter Property="Fill" Value="MediumPurple"></Setter>
         </Style>
     </Window.Styles>
@@ -37,28 +37,27 @@
         >
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center">Algorithm</TextBlock>
-                <ComboBox SelectedIndex="{Binding SelectedItem}" Width="140" PlaceholderText="- Select -">
-                    <ComboBoxItem>Bubble Sort</ComboBoxItem>
-                    <ComboBoxItem>Selection Sort</ComboBoxItem>
-                    <ComboBoxItem>Insertion Sort</ComboBoxItem>
-                    <ComboBoxItem>Merge Sort</ComboBoxItem>
-                    <ComboBoxItem>Quick Sort</ComboBoxItem>
+                <ComboBox 
+                    Width="140" 
+                    PlaceholderText="- Select -"
+                >
+                    <ComboBoxItem><TextBlock>Bubble Sort</TextBlock></ComboBoxItem>
+                    <ComboBoxItem><TextBlock>Selection Sort</TextBlock></ComboBoxItem>
+                    <ComboBoxItem><TextBlock>Insertion Sort</TextBlock></ComboBoxItem>
+                    <ComboBoxItem><TextBlock>Merge Sort</TextBlock></ComboBoxItem>
+                    <ComboBoxItem><TextBlock>Quick Sort</TextBlock></ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             
             <StackPanel>
-                <TextBlock VerticalAlignment="Center">Speed</TextBlock>
-                <Slider Minimum="200" Maximum="2000"></Slider>
+                <TextBlock VerticalAlignment="Center">Delay</TextBlock>
+                <Slider Minimum="1" Maximum="200" Value="{Binding DelayValue}"></Slider>
             </StackPanel>
-            
-            <TextBlock>Time Elapsed</TextBlock>
             
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding StartSorting}">Start</Button>
-                <Button>Stop</Button>                
+                <Button Command="{Binding Reset}">Reset</Button>                
             </StackPanel>
-            
-            <TextBlock Text="{Binding SelectedItem}"></TextBlock>
         </StackPanel>
         
         <ItemsControl ItemsSource="{Binding Rectangles}">
