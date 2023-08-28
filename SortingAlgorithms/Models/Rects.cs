@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace SortingAlgorithms.Models;
 
-public class Rects
+public static class Rects
 {
     public static ObservableCollection<Rectangle> Rectangles { get; } = new();
 }

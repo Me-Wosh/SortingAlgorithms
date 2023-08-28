@@ -29,6 +29,8 @@ public static class Algorithms
 
     public static async void SelectionSort(double delay)
     {
+        Stopwatch.Start();
+        
         for (var i = 0; i < Rectangles.Count; i++)
         {
             var min = i;
@@ -45,5 +47,7 @@ public static class Algorithms
 
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
         }
+        
+        Stopwatch.Stop();
     }
 }
