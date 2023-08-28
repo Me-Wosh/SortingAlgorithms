@@ -39,6 +39,6 @@ public class MainWindowViewModel : ViewModelBase
 
     private void UpdateDisplayedTime(object? sender, EventArgs args)
     {
-        TimeElapsed = Stopwatch.TimeElapsed;
+        TimeElapsed = (DateTime.Now - Stopwatch.TimeStarted).ToString(@"mm\:ss\.fff");
     }
 }
