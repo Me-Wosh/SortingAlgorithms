@@ -1,13 +1,22 @@
 using static SortingAlgorithms.Models.Rects;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SortingAlgorithms;
 
 public static class Algorithms
 {
-    public static async void BubbleSort(double delay)
+    public static Dictionary<int, Action<double>> SelectedAlgorithm { get; } = new()
     {
+        { 0, BubbleSort },
+        { 1, SelectionSort },
+        { 2, InsertionSort }
+    };
+    private static async void BubbleSort(double delay)
+    {
+        Stopwatch.Start();
+        
         var active = true;
 
         while (active)
@@ -25,9 +34,11 @@ public static class Algorithms
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
             }
         }
+        
+        Stopwatch.Stop();
     }
 
-    public static async void SelectionSort(double delay)
+    private static async void SelectionSort(double delay)
     {
         Stopwatch.Start();
         
@@ -46,6 +57,26 @@ public static class Algorithms
             (Rectangles[i], Rectangles[min]) = (Rectangles[min], Rectangles[i]);
 
             await Task.Delay(TimeSpan.FromMilliseconds(delay));
+        }
+        
+        Stopwatch.Stop();
+    }
+
+    private static async void InsertionSort(double delay)
+    {
+        Stopwatch.Start();
+
+        for (var i = 1; i < Rectangles.Count; i++)
+        {
+            for (var j = i; j > 0; j--)
+            {
+                if (Rectangles[j].Height >= Rectangles[j - 1].Height)
+                    continue;
+
+                (Rectangles[j], Rectangles[j - 1]) = (Rectangles[j - 1], Rectangles[j]);
+
+                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            }
         }
         
         Stopwatch.Stop();

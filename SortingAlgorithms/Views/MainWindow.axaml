@@ -26,7 +26,6 @@
         <Style Selector="Rectangle">
             <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
             <Setter Property="Width" Value="5"></Setter>
-            <Setter Property="Fill" Value="MediumPurple"></Setter>
         </Style>
     </Window.Styles>
     
@@ -39,13 +38,14 @@
                 <TextBlock VerticalAlignment="Center">Algorithm</TextBlock>
                 <ComboBox 
                     Width="140" 
+                    SelectedIndex="{Binding SelectedIndex}"
                     PlaceholderText="- Select -"
                 >
-                    <ComboBoxItem><TextBlock>Bubble Sort</TextBlock></ComboBoxItem>
-                    <ComboBoxItem><TextBlock>Selection Sort</TextBlock></ComboBoxItem>
-                    <ComboBoxItem><TextBlock>Insertion Sort</TextBlock></ComboBoxItem>
-                    <ComboBoxItem><TextBlock>Merge Sort</TextBlock></ComboBoxItem>
-                    <ComboBoxItem><TextBlock>Quick Sort</TextBlock></ComboBoxItem>
+                    <ComboBoxItem>Bubble Sort</ComboBoxItem>
+                    <ComboBoxItem>Selection Sort</ComboBoxItem>
+                    <ComboBoxItem>Insertion Sort</ComboBoxItem>
+                    <ComboBoxItem>Merge Sort</ComboBoxItem>
+                    <ComboBoxItem>Quick Sort</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             
@@ -74,10 +74,9 @@
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Height="{Binding Height}"></Rectangle>
+                    <Rectangle Height="{Binding Height}" Fill="{Binding Color}"></Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </DockPanel>
-
 </Window>

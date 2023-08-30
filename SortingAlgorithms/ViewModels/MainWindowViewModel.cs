@@ -10,6 +10,7 @@ namespace SortingAlgorithms.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     private readonly RectangleService _rectangleService = new();
+    private int _selectedIndex;
     private double _delayValue = 10d;
     private string _timeElapsed = "00:00.000";
     public ObservableCollection<Rectangle> Rectangles { get; set; }
@@ -20,11 +21,16 @@ public class MainWindowViewModel : ViewModelBase
     {
         Rectangles = Rects.Rectangles;
         _rectangleService.GenerateRectangles();
-        StartSorting = ReactiveCommand.Create(() => Algorithms.SelectionSort(DelayValue));
-        Reset = ReactiveCommand.Create(_rectangleService.ShuffleRectangles);
+        StartSorting = ReactiveCommand.Create(() => Algorithms.SelectedAlgorithm[SelectedIndex](DelayValue));
+        Reset = ReactiveCommand.Create(() => _rectangleService.ShuffleRectangles(true));
         Stopwatch.AddTick(UpdateDisplayedTime);
     }
-    
+
+    public int SelectedIndex
+    {
+        get => _selectedIndex; 
+        set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+    }
     public double DelayValue
     {
         get => _delayValue; 
