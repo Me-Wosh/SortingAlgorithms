@@ -15,8 +15,8 @@ public sealed class RectangleService
         const short minHeight = 5;
         const short maxHeight = 585;
         
-        const byte leftRed = 20;
-        const byte rightRed = 130; 
+        const byte leftRed = 40;
+        const byte rightRed = 150; 
         
         for (var i = 0; i < NumberOfRectangles; i++)
         {
@@ -24,7 +24,9 @@ public sealed class RectangleService
             
             var color = new SolidColorBrush(Color.FromRgb(red, 35, 190));
             
-            Rectangles.Add(new Rectangle(5 + (int)((double)(maxHeight - minHeight) / NumberOfRectangles * i), color));
+            Rectangles.Add(new Rectangle(
+                Height: 5 + (int)((double)(maxHeight - minHeight) / (double)NumberOfRectangles * i),
+                Color: color));
         }
         
         ShuffleRectangles(false);

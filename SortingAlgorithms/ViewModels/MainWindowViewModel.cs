@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Threading.Tasks;
 using ReactiveUI;
 using SortingAlgorithms.Models;
 using SortingAlgorithms.Services;
@@ -14,7 +15,7 @@ public class MainWindowViewModel : ViewModelBase
     private double _delayValue = 10d;
     private string _timeElapsed = "00:00.000";
     public ObservableCollection<Rectangle> Rectangles { get; set; }
-    public ReactiveCommand<Unit, Unit> StartSorting { get; set; }
+    public ReactiveCommand<Unit, Task> StartSorting { get; set; }
     public ReactiveCommand<Unit, Unit> Reset { get; set; }
 
     public MainWindowViewModel()

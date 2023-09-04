@@ -7,4 +7,5 @@ public static class Rects
 {
     public static ObservableCollection<Rectangle> Rectangles { get; } = new();
 }
+
 public record Rectangle (int Height, IBrush Color);

@@ -15,7 +15,7 @@
     
     <Window.Styles>
         <Style Selector="StackPanel">
-            <Setter Property="Spacing" Value="5"></Setter>
+            <Setter Property="Spacing" Value="10"></Setter>
         </Style>
         
         <Style Selector="StackPanel > Button">
@@ -31,21 +31,20 @@
     
     <DockPanel Margin="15">
         <StackPanel 
-            DockPanel.Dock="Right" 
-            MinWidth="215"
+            Width="180"
+            DockPanel.Dock="Right"
         >
-            <StackPanel Orientation="Horizontal">
+            <StackPanel>
                 <TextBlock VerticalAlignment="Center">Algorithm</TextBlock>
                 <ComboBox 
-                    Width="140" 
                     SelectedIndex="{Binding SelectedIndex}"
                     PlaceholderText="- Select -"
                 >
                     <ComboBoxItem>Bubble Sort</ComboBoxItem>
+                    <ComboBoxItem>Cocktail Shaker Sort</ComboBoxItem>
                     <ComboBoxItem>Selection Sort</ComboBoxItem>
                     <ComboBoxItem>Insertion Sort</ComboBoxItem>
                     <ComboBoxItem>Merge Sort</ComboBoxItem>
-                    <ComboBoxItem>Quick Sort</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             

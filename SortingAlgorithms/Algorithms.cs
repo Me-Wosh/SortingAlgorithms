@@ -2,28 +2,32 @@ using static SortingAlgorithms.Models.Rects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SortingAlgorithms.Models;
 
 namespace SortingAlgorithms;
 
 public static class Algorithms
 {
-    public static Dictionary<int, Action<double>> SelectedAlgorithm { get; } = new()
+    public static Dictionary<int, Func<double, Task>> SelectedAlgorithm { get; } = new()
     {
         { 0, BubbleSort },
-        { 1, SelectionSort },
-        { 2, InsertionSort }
+        { 1, CocktailShakerSort },
+        { 2, SelectionSort },
+        { 3, InsertionSort },
+        { 4, MergeSort }
     };
-    private static async void BubbleSort(double delay)
+    private static async Task BubbleSort(double delay)
     {
         Stopwatch.Start();
         
         var active = true;
+        var end = Rectangles.Count - 1;
 
         while (active)
         {
             active = false;
 
-            for (var i = 0; i < Rectangles.Count - 1; i++)
+            for (var i = 0; i < end; i++)
             {
                 if (Rectangles[i + 1].Height >= Rectangles[i].Height)
                     continue;
@@ -33,12 +37,56 @@ public static class Algorithms
                 
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
             }
+
+            end--;
+        }
+        
+        Stopwatch.Stop();
+    }
+    
+    private static async Task CocktailShakerSort(double delay)
+    {
+        Stopwatch.Start();
+
+        var active = true;
+        var start = 0;
+        var end = Rectangles.Count - 1;
+
+        while (active)
+        {
+            active = false;
+
+            for (var i = start; i < end; i++)
+            {
+                if (Rectangles[i].Height <= Rectangles[i + 1].Height)
+                    continue;
+                
+                (Rectangles[i], Rectangles[i + 1]) = (Rectangles[i + 1], Rectangles[i]);
+                active = true;
+                
+                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            }
+
+            end--;
+
+            for (var i = end; i > 0; i--)
+            {
+                if (Rectangles[i].Height >= Rectangles[i - 1].Height)
+                    continue;
+                
+                (Rectangles[i], Rectangles[i - 1]) = (Rectangles[i - 1], Rectangles[i]);
+                active = true;
+                
+                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            }
+
+            start++;
         }
         
         Stopwatch.Stop();
     }
 
-    private static async void SelectionSort(double delay)
+    private static async Task SelectionSort(double delay)
     {
         Stopwatch.Start();
         
@@ -62,7 +110,7 @@ public static class Algorithms
         Stopwatch.Stop();
     }
 
-    private static async void InsertionSort(double delay)
+    private static async Task InsertionSort(double delay)
     {
         Stopwatch.Start();
 
@@ -80,5 +128,72 @@ public static class Algorithms
         }
         
         Stopwatch.Stop();
+    }
+
+    private static async Task MergeSort(double delay)
+    {
+        Stopwatch.Start();
+
+        await MergeSort(0, Rectangles.Count - 1, delay);
+        
+        Stopwatch.Stop();
+    }
+
+    private static async Task MergeSort(int left, int right, double delay)
+    {
+        if (left >= right)
+            return;
+
+        var middle = (right - left) / 2 + left;
+
+        await MergeSort(left, middle, delay);
+        await MergeSort(middle + 1, right, delay);
+        await Merge(left, right, middle, delay);
+    }
+
+    private static async Task Merge(int left, int right, int middle, double delay)
+    {
+        var leftArray = new Rectangle[middle - left + 1];
+        var rightArray = new Rectangle[right - middle];
+
+        for (var i = 0; i < leftArray.Length; i++)
+            leftArray[i] = Rectangles[i + left];
+        
+        for (var i = 0; i < rightArray.Length; i++)
+            rightArray[i] = Rectangles[middle + 1 + i];
+
+        int j = left, l = 0, r = 0;
+        
+        while (l < leftArray.Length && r < rightArray.Length)
+        {
+            if (leftArray[l].Height < rightArray[r].Height)
+            {
+                Rectangles[j] = leftArray[l];
+                l++;
+            }
+
+            else
+            {
+                Rectangles[j] = rightArray[r];
+                r++;
+            }
+
+            j++;
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+        }
+
+        while (l < leftArray.Length)
+        {
+            Rectangles[j] = leftArray[l];
+            j++;
+            l++;
+        }
+        
+        while (r < rightArray.Length)
+        {
+            Rectangles[j] = rightArray[r]; 
+            j++;
+            r++;
+        }
     }
 }
