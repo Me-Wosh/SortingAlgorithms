@@ -25,7 +25,7 @@
         
         <Style Selector="Rectangle">
             <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
-            <Setter Property="Width" Value="5"></Setter>
+            <Setter Property="Width" Value="2"></Setter>
         </Style>
     </Window.Styles>
     
@@ -45,12 +45,13 @@
                     <ComboBoxItem>Selection Sort</ComboBoxItem>
                     <ComboBoxItem>Insertion Sort</ComboBoxItem>
                     <ComboBoxItem>Merge Sort</ComboBoxItem>
+                    <ComboBoxItem>Quick Sort</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             
             <StackPanel>
                 <TextBlock VerticalAlignment="Center">Delay</TextBlock>
-                <Slider Minimum="1" Maximum="200" Value="{Binding DelayValue}"></Slider>
+                <Slider Minimum="1" Maximum="50" Value="{Binding DelayValue}"></Slider>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal">

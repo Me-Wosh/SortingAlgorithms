@@ -8,7 +8,7 @@ namespace SortingAlgorithms.Services;
 
 public sealed class RectangleService
 {
-    private const int NumberOfRectangles = 130;
+    private const int NumberOfRectangles = 280;
     private readonly Random _random = new();
     public void GenerateRectangles()
     {
@@ -18,27 +18,34 @@ public sealed class RectangleService
         const byte leftRed = 40;
         const byte rightRed = 150; 
         
-        for (var i = 0; i < NumberOfRectangles; i++)
+        for (var i = 1; i <= NumberOfRectangles; i++)
         {
             var red = (byte)(leftRed - (double)(leftRed - rightRed) / (double)NumberOfRectangles * i);
             
             var color = new SolidColorBrush(Color.FromRgb(red, 35, 190));
             
             Rectangles.Add(new Rectangle(
-                Height: 5 + (int)((double)(maxHeight - minHeight) / (double)NumberOfRectangles * i),
+                Height: (double)(maxHeight - minHeight) / (double)NumberOfRectangles * i,
                 Color: color));
         }
         
-        ShuffleRectangles(false);
+        ShuffleRectangles();
     }
     
-    public async void ShuffleRectangles(bool addDelay)
+    public async void ShuffleRectangles(bool addDelay = false)
     {
-        for (var i = 0; i < NumberOfRectangles; i++)
+        int i = 0, j = NumberOfRectangles - 1;
+        
+        while (i < j)
         {
-            var randomValue = _random.Next(0, NumberOfRectangles - 1);
+            var randomValueLeft = _random.Next(0, j);
+            var randomValueRight = _random.Next(0, j);
 
-            (Rectangles[i], Rectangles[randomValue]) = (Rectangles[randomValue], Rectangles[i]);
+            (Rectangles[i], Rectangles[randomValueLeft]) = (Rectangles[randomValueLeft], Rectangles[i]);
+            (Rectangles[j], Rectangles[randomValueRight]) = (Rectangles[randomValueRight], Rectangles[j]);
+
+            i++;
+            j--;
             
             await Task.Delay(TimeSpan.FromMilliseconds(addDelay ? 35 : 0));
         }

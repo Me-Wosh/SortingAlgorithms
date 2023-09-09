@@ -14,7 +14,8 @@ public static class Algorithms
         { 1, CocktailShakerSort },
         { 2, SelectionSort },
         { 3, InsertionSort },
-        { 4, MergeSort }
+        { 4, MergeSort },
+        { 5, QuickSort }
     };
     private static async Task BubbleSort(double delay)
     {
@@ -104,7 +105,7 @@ public static class Algorithms
 
             (Rectangles[i], Rectangles[min]) = (Rectangles[min], Rectangles[i]);
 
-            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+            await Task.Delay(TimeSpan.FromMilliseconds(delay + 30));
         }
         
         Stopwatch.Stop();
@@ -187,6 +188,7 @@ public static class Algorithms
             Rectangles[j] = leftArray[l];
             j++;
             l++;
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
         }
         
         while (r < rightArray.Length)
@@ -194,6 +196,60 @@ public static class Algorithms
             Rectangles[j] = rightArray[r]; 
             j++;
             r++;
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
         }
+    }
+
+    private static async Task QuickSort(double delay)
+    {
+        Stopwatch.Start();
+
+        await QuickSort(0, Rectangles.Count - 1, delay);
+            
+        Stopwatch.Stop();
+    }
+
+    private static async Task QuickSort(int first, int last, double delay)
+    {
+        if (first > last)
+            return;
+        
+        var pivotIndex = await Partition(first, last, delay);
+        
+        await QuickSort(first, pivotIndex - 1, delay);
+        await QuickSort(pivotIndex + 1, last, delay);
+    }
+
+    private static async Task<int> Partition(int first, int last, double delay)
+    {
+        var middle = (first + last) / 2;
+        
+        if (Rectangles[middle].Height < Rectangles[first].Height)
+            (Rectangles[first], Rectangles[middle]) = (Rectangles[middle], Rectangles[first]);
+        
+        if (Rectangles[last].Height < Rectangles[first].Height)
+            (Rectangles[first], Rectangles[last]) = (Rectangles[last], Rectangles[first]);
+
+        if (Rectangles[middle].Height < Rectangles[last].Height)
+            (Rectangles[middle], Rectangles[last]) = (Rectangles[last], Rectangles[middle]);
+
+        var pivot = Rectangles[last].Height;
+            
+        var i = first;
+
+        for (var j = first; j < last; j++)
+        {
+            if (Rectangles[j].Height > pivot)
+                continue;
+            
+            (Rectangles[i], Rectangles[j]) = (Rectangles[j], Rectangles[i]);
+            i++;
+            
+            await Task.Delay(TimeSpan.FromMilliseconds(delay));
+        }
+
+        (Rectangles[i], Rectangles[last]) = (Rectangles[last], Rectangles[i]);
+
+        return i;
     }
 }
