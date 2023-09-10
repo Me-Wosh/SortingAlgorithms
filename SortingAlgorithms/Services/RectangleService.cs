@@ -10,6 +10,7 @@ public sealed class RectangleService
 {
     private const int NumberOfRectangles = 280;
     private readonly Random _random = new();
+    
     public void GenerateRectangles()
     {
         const short minHeight = 5;
@@ -32,7 +33,7 @@ public sealed class RectangleService
         ShuffleRectangles();
     }
     
-    public async void ShuffleRectangles(bool addDelay = false)
+    public async Task ShuffleRectangles(bool addDelay = false)
     {
         int i = 0, j = NumberOfRectangles - 1;
         

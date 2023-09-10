@@ -12,21 +12,23 @@ public static class Algorithms
     {
         { 0, BubbleSort },
         { 1, CocktailShakerSort },
-        { 2, SelectionSort },
-        { 3, InsertionSort },
-        { 4, MergeSort },
-        { 5, QuickSort }
+        { 2, CombSort},
+        { 3, SelectionSort },
+        { 4, InsertionSort },
+        { 5, MergeSort },
+        { 6, QuickSort }
     };
+    
     private static async Task BubbleSort(double delay)
     {
         Stopwatch.Start();
         
-        var active = true;
+        var sorted = false;
         var end = Rectangles.Count - 1;
 
-        while (active)
+        while (!sorted)
         {
-            active = false;
+            sorted = true;
 
             for (var i = 0; i < end; i++)
             {
@@ -34,7 +36,7 @@ public static class Algorithms
                     continue;
                 
                 (Rectangles[i + 1], Rectangles[i]) = (Rectangles[i], Rectangles[i + 1]);
-                active = true;
+                sorted = false;
                 
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
             }
@@ -49,13 +51,13 @@ public static class Algorithms
     {
         Stopwatch.Start();
 
-        var active = true;
+        var sorted = false;
         var start = 0;
         var end = Rectangles.Count - 1;
 
-        while (active)
+        while (!sorted)
         {
-            active = false;
+            sorted = true;
 
             for (var i = start; i < end; i++)
             {
@@ -63,7 +65,7 @@ public static class Algorithms
                     continue;
                 
                 (Rectangles[i], Rectangles[i + 1]) = (Rectangles[i + 1], Rectangles[i]);
-                active = true;
+                sorted = false;
                 
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
             }
@@ -76,12 +78,49 @@ public static class Algorithms
                     continue;
                 
                 (Rectangles[i], Rectangles[i - 1]) = (Rectangles[i - 1], Rectangles[i]);
-                active = true;
+                sorted = false;
                 
                 await Task.Delay(TimeSpan.FromMilliseconds(delay));
             }
 
             start++;
+        }
+        
+        Stopwatch.Stop();
+    }
+
+    private static async Task CombSort(double delay)
+    {
+        Stopwatch.Start();
+
+        var gap = Rectangles.Count;
+        var shrink = 1.3;
+        var sorted = false;
+
+        while (!sorted)
+        {
+            gap = (int)(gap / shrink);
+
+            if (gap <= 1)
+            {
+                gap = 1;
+                sorted = true;
+            }
+
+            var i = 0;
+            
+            while (i + gap < Rectangles.Count)
+            {
+                if (Rectangles[i].Height > Rectangles[i + gap].Height)
+                {
+                    (Rectangles[i], Rectangles[i + gap]) = (Rectangles[i + gap], Rectangles[i]);
+                    sorted = false;
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(delay));
+                }
+
+                i++;
+            }
         }
         
         Stopwatch.Stop();
@@ -105,7 +144,7 @@ public static class Algorithms
 
             (Rectangles[i], Rectangles[min]) = (Rectangles[min], Rectangles[i]);
 
-            await Task.Delay(TimeSpan.FromMilliseconds(delay + 30));
+            await Task.Delay(TimeSpan.FromMilliseconds(delay * 3));
         }
         
         Stopwatch.Stop();

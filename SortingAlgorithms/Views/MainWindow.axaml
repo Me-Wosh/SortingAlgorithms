@@ -30,18 +30,13 @@
     </Window.Styles>
     
     <DockPanel Margin="15">
-        <StackPanel 
-            Width="180"
-            DockPanel.Dock="Right"
-        >
+        <StackPanel Width="180" DockPanel.Dock="Right">
             <StackPanel>
-                <TextBlock VerticalAlignment="Center">Algorithm</TextBlock>
-                <ComboBox 
-                    SelectedIndex="{Binding SelectedIndex}"
-                    PlaceholderText="- Select -"
-                >
+                <TextBlock Text="Algorithm"></TextBlock>
+                <ComboBox SelectedIndex="{Binding SelectedIndex}" Width="180">
                     <ComboBoxItem>Bubble Sort</ComboBoxItem>
                     <ComboBoxItem>Cocktail Shaker Sort</ComboBoxItem>
+                    <ComboBoxItem>Comb Sort</ComboBoxItem>
                     <ComboBoxItem>Selection Sort</ComboBoxItem>
                     <ComboBoxItem>Insertion Sort</ComboBoxItem>
                     <ComboBoxItem>Merge Sort</ComboBoxItem>
@@ -55,11 +50,11 @@
             </StackPanel>
             
             <StackPanel Orientation="Horizontal">
-                <TextBlock>Time Elapsed</TextBlock>
+                <TextBlock>Time Elapsed:</TextBlock>
                 <TextBlock Text="{Binding TimeElapsed}"></TextBlock>
             </StackPanel>
             
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Command="{Binding StartSorting}">Start</Button>
                 <Button Command="{Binding Reset}">Reset</Button>                
             </StackPanel>
